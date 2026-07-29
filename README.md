@@ -22,4 +22,11 @@
  
  save_message - для пятой команды.
 
+#### Файлы проекта
+1. _logic.py - таблица (user_id, text, translation, date)_
+2. _main.py - бот_
+3. _config.py - токен_
+
+
+
 
