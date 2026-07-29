@@ -23,10 +23,14 @@
  save_message - для пятой команды.
 
 #### Файлы проекта
-1. _logic.py - таблица (user_id, text, translation, date)_
+1. _logic.py - таблица (user_id, user_text, translation, date)_
 2. _main.py - бот_
 3. _config.py - токен_
 
+##### Откуда берём информацию
+1. _документация библиотек (telebot, translator, datetime)_
+2. _шаблон проектов M4L4_
+3. _наш проект с переводчиком_
 
 
 
