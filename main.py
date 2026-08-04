@@ -5,20 +5,16 @@ from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 from config import *
 from googletrans import Translator
 from logic import *
-import asyncio
-
+from gtts import gTTS
 
 bot = telebot.TeleBot(TOKEN)
 user_language_map = {}
 
 
-
+bot = telebot. TeleBot(TOKEN)
 @bot.message_handler(commands=['start'])
-def start(message):
-    bot.send_message(
-        message.chat.id,
-        "Привет, я бот-переводчик. Моя главная задача — переводить тексты, которые ты скажешь."
-    )
+def handle_start(message):
+    bot.send_message(message.chat. id, "Привет! Я бот, который может переводить текст на разные языки мира. ")
     bot.send_message(
         message.chat.id,
         "Напиши мне /help и узнаешь подробности."
@@ -32,7 +28,7 @@ def help(message):
 
 Потом введи команду /text <текст> — и получишь перевод. Если хочешь поменять язык, напиши /language.
 
-Твои запросы сохранятся, так что ты сможешь посмотреть свои фразы."""
+Твои запросы сохранятся, так что ты сможешь посмот реть свои фразы."""
     )
 
 @bot.message_handler(commands=['language'])
@@ -106,10 +102,7 @@ def text_translate(message):
     try:
         translator = Translator()
         bot.send_chat_action(message.chat.id, "typing")
-
-        result = asyncio.run(
-            translator.translate(text_to_translate, dest=lang)
-        )
+        result = translator.translate(text_to_translate, dest=lang)
         translated_text = result.text
 
         now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -120,17 +113,16 @@ def text_translate(message):
             date=now
         )
 
-        message_text = (
-            f"📄 Исходный: {text_to_translate}\n\n"
-            f"🌍 Перевод ({lang}): {translated_text}"
-        )
+        message_text = f"📄 Исходный: {text_to_translate}\n\n🌍 Перевод ({lang}): {translated_text}"
         bot.send_message(message.chat.id, message_text)
+
+
 
     except Exception as e:
         bot.send_message(
             message.chat.id,
-            f"⚠️ Ошибка при переводе: {e}"
-    )
+            f"⚠️ Ошибка при переводе : {e}"
+        )
 
 if __name__ == '__main__':
     manager = BotTranslator(DATABASE)

@@ -1,2 +1,2 @@
-TOKEN = "YOUR TOKEN"
+TOKEN = ""
 DATABASE = "translator.db"
