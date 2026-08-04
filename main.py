@@ -10,8 +10,11 @@ from gtts import gTTS
 bot = telebot.TeleBot(TOKEN)
 user_language_map = {}
 
+TEMP_DIR = "temp_audio"
+os.makedirs(TEMP_DIR, exist_ok=True)
 
-bot = telebot. TeleBot(TOKEN)
+
+
 @bot.message_handler(commands=['start'])
 def handle_start(message):
     bot.send_message(message.chat. id, "Привет! Я бот, который может переводить текст на разные языки мира. ")
@@ -116,6 +119,15 @@ def text_translate(message):
         message_text = f"📄 Исходный: {text_to_translate}\n\n🌍 Перевод ({lang}): {translated_text}"
         bot.send_message(message.chat.id, message_text)
 
+        file_name = f"{user_id}_{message.message_id}.mp3"
+        file_path = os.path.join(TEMP_DIR, file_name)
+        tts = gTTS(translated_text, lang=lang, slow=False)
+        tts.save(file_path)
+        with open(file_path, "rb") as audio_file:
+            bot.send_voice(message.chat.id, audio_file)
+
+        if os.path.exists(file_path):
+            os.remove(file_path)
 
 
     except Exception as e:
